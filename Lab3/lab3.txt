@@ -1,0 +1,71 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 04/21/2022 02:14:53 PM
+// Design Name: 
+// Module Name: lab3
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module instruction(clock,address,instruction_out);
+    input clock;
+    input [7:0] address;
+    output reg [31:0] instruction_out;
+    wire [31:0] instructions [255:0];
+    
+    assign instructions[200] = 20;
+    assign instructions[50] = 5;
+    assign instructions[10] = 1;
+    
+    always@(posedge clock)
+    begin
+        instruction_out = instructions[address];
+    end
+endmodule
+
+module register(clock,write,rs1,rs2,rd,datain,rs1_out,rs2_out);
+    input clock, write;
+    input [5:0] rs1;
+    input [5:0] rs2;
+    input [5:0] rd;
+    input [31:0] datain;
+    reg [31:0] registers [63:0];
+    output reg [31:0] rs1_out;
+    output reg [31:0] rs2_out;
+    
+    always@(posedge clock)
+    begin
+        rs1_out = registers[rs1];
+        rs2_out = registers[rs2];
+        if(write == 1)
+            registers[rd] = datain;
+    end
+endmodule
+
+module data(clock,write,read,address,datain,dataout);
+    input clock,write,read;
+    input [31:0] address;
+    input [31:0] datain;
+    reg [31:0] data[65535:0];
+    output reg [31:0] dataout;
+    
+    always@ (posedge clock)
+    begin
+        if(read == 1)
+            dataout = data[address[15:0]];
+        if(write == 1)
+            data[address[15:0]] = datain;
+    end
+endmodule

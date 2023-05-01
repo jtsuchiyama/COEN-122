@@ -1,0 +1,40 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 04/07/2022 02:47:54 PM
+// Design Name: 
+// Module Name: mux
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module mux(A, B, C, D, sel, out);
+    input A, B, C, D;
+    input [1:0] sel;
+    output out;
+    wire outA, outB, outC, outD, notSel0, notSel1;
+
+    not(notSel0, sel[0]);
+    not(notSel1, sel[1]);
+    and(outA, A, notSel0, notSel1);
+   
+    and(outB, B, sel[0], notSel1);
+   
+    and(outC, C, notSel0, sel[1]);
+   
+    and(outD, D, sel[0], sel[1]);
+    
+    or(out, outA, outB, outC, outD);
+endmodule

@@ -1,0 +1,57 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 04/28/2022 02:25:56 PM
+// Design Name: 
+// Module Name: lab4_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module MEM_WB_tb();
+    reg [7:0] Signal_INPUT;
+    reg [7:0] Instr_INPUT;
+    reg clk;
+    wire [7:0] Signal_OUTPUT;
+    wire [7:0] Instr_OUTPUT;
+    
+    MEM_WB_Buffer Pipeline_Test(.clock(clk), .Signal_Input(Signal_INPUT), .Instr_Input(Instr_INPUT), .Signal_Output(Signal_OUTPUT), .Instr_Output(Instr_OUTPUT));
+    
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;
+    end
+    
+    initial begin
+        Signal_INPUT = 8'd255;
+        Instr_INPUT = 8'd25;
+        #50
+        
+        Signal_INPUT = 8'd128;
+        Instr_INPUT = 8'd12;
+        #50
+        
+        Signal_INPUT = 8'd16;
+        Instr_INPUT = 8'd1;
+        #50
+        
+        Signal_INPUT = 8'd200;
+        Instr_INPUT = 8'd0;
+        #50
+        
+        
+        $finish;
+    end
+endmodule

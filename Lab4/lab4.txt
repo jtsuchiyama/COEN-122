@@ -1,0 +1,36 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 04/28/2022 02:21:37 PM
+// Design Name: 
+// Module Name: lab4
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module MEM_WB_Buffer(clock, Signal_Input, Instr_Input, Signal_Output, Instr_Output);
+    input clock;
+    input [7:0] Signal_Input;
+    input [7:0] Instr_Input;
+    
+    output reg [7:0] Signal_Output;
+    output reg [7:0] Instr_Output;
+    
+    always @(posedge clock)
+        begin
+            Signal_Output = Signal_Input;
+            Instr_Output = Instr_Input;
+        end
+endmodule

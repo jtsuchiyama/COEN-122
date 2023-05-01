@@ -1,0 +1,91 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 04/21/2022 02:57:17 PM
+// Design Name: 
+// Module Name: lab3_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module lab3_tb();
+    reg clock;
+    reg [7:0] address;
+    wire [31:0] instr;
+    instruction instruction_test(clock,address,instr);
+    
+    reg write;
+    reg [5:0] rs1;
+    reg [5:0] rs2;
+    reg [5:0] rd;
+    reg [31:0] datain;
+    wire [31:0] rs1_out;
+    wire [31:0] rs2_out;
+    register register_test(clock,write,rs1,rs2,rd,datain,rs1_out,rs2_out);
+    
+    reg data_write, read;
+    reg [31:0] data_address;
+    reg [31:0] data_in;
+    wire [31:0] data_out;
+    data data_test(clock,data_write,read,data_address,data_in,data_out);
+    
+    initial
+    begin
+        clock = 0;
+        forever #5 clock = ~clock; // changes the clock every 5 ns
+    end
+    
+    initial
+    begin
+        // test for instruction memory; get the instruction depending on what the address is
+        address = 200;
+        #50
+        address = 50;
+        #50
+        address = 10;
+        
+        // test for writing to the register file
+        // write 44 to register address 4
+        #50
+        write = 1;
+        datain = 44;
+        rd = 4;
+        
+        // write 88 to register address 8
+        #50
+        datain = 88;
+        rd = 8;
+        
+        // test for reading from the register address 4 and 8
+        #50
+        write = 0;
+        rs1 = 4;
+        rs2 = 8;
+        
+        // test for writing 420 to data memory address 100
+        #50
+        data_write = 1;
+        read = 0;
+        data_address = 100;
+        data_in = 420;
+        
+        // test for reading from data memory address 100
+        #50
+        data_write = 0;
+        read = 1;
+        #50
+        $finish;
+    end
+endmodule
